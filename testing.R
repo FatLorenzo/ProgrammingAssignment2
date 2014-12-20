@@ -4,8 +4,9 @@
 ## Version: 0.1
 
 ## Some sample matrices for testing purposes
-a=rbind(c(2, 1), c(1, 1))
-b=rbind(c(1, -1), c(-1, 2))
+a=rbind(c(2, 1), c(1, 1))       ## simple test matrix
+b=rbind(c(1, -1), c(-1, 2))     ## inverse matrix of a
+i=rbind(c(1, 0), c(0, 1))       ## identity matrix
 
 ## Simple test case if makeCacheMatrix works.
 testMakeCacheMatrix <- function() {
@@ -28,3 +29,21 @@ testMakeCacheMatrix <- function() {
     print("Check wether if b and internal stored value are identical")
     print(identical(b,m$get()))
 } 
+
+## Simple test case if cacheSolve works
+testCacheSolve <- function() {
+    print("Matrix a:")
+    print(a)
+    print("Calling makeCacheMatrix with matrix a: m <- makeCacheMatrix(a)")
+    m <- makeCacheMatrix(a)
+    print("Get inverse matrix from cache")
+    print(m$getInverse())
+    print("Call function cacheSolve for matrix m")
+    print(cacheSolve(m))
+    print("Get inverse matrix from cache")
+    print(m$getInverse())
+    print("Inverse of matrix a should be equal to matrix b")
+    print(identical(b,m$getInverse()))
+    print("Stored matrix multiplied with its inverse should return identity matrix")
+    print(m$get() %*% m$getInverse())
+}
